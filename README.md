@@ -1,2 +1,2 @@
 # YTD
- Download videos or music from YouTobe
+ Download video or music from YouTube
