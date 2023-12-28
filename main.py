@@ -39,7 +39,7 @@ try:
                         stream = youtube.streams.get_highest_resolution()
                         stream.download(output_path=self.path, filename=f"{title}.mp4")
                     else:
-                        stream = youtube.streams.filter(only_audio=True, file_extension="mp3").first()
+                        stream = youtube.streams.filter(only_audio=True).first()
                         stream.download(output_path=self.path, filename=f"{title}.mp3")
                     self.signals.progress.emit(100, f'1/1 {title}')
                     self.signals.finished.emit()
@@ -55,7 +55,7 @@ try:
                             stream = youtube.streams.filter(only_audio=False, file_extension="mp4").first()
                             stream.download(output_path=self.path, filename=f"{title}.mp4")
                         else:
-                            stream = youtube.streams.filter(only_audio=True, file_extension="mp3").first()
+                            stream = youtube.streams.filter(only_audio=True).first()
                             stream.download(output_path=self.path, filename=f"{title}.mp3")
                         p += 1
                         self.l = (p * 100) / len(link)
