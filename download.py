@@ -1,9 +1,9 @@
 import os
 from pathlib import Path
 from mutagen.easyid3 import EasyID3
-from moviepy.editor import AudioFileClip
 from additionary import clearFileName
-from pytube import YouTube
+
+from pydub import AudioSegment
 
 
 def download_video(yt, path):
@@ -23,9 +23,8 @@ def download_youtube_audio(yt, output_path):
     return audio_file_path
 
 def convert_to_mp3(video_file_path):
-    audio = AudioFileClip(video_file_path)
-    audio.write_audiofile(f"{video_file_path.split('.')[0]}.mp3")
-    audio.close()
+    audio = AudioSegment.from_file(Path(video_file_path), format="mp4")
+    audio.export(f"{video_file_path.split('.')[0]}.mp3", format="wav")
     os.remove(video_file_path)
     return f"{video_file_path.split('.')[0]}.mp3"
 
