@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-video_url = "https://music.youtube.com/watch?v=zWU_9szkSdY&si=v8wNMtA6hHjUoU7U"
+video_url = "https://music.youtube.com/watch?v=WUbYKe2DQgU&si=fRcmT7rAMHWDIuSV"
 
 yt = YouTube(video_url)
 

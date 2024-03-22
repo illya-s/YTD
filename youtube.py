@@ -1,44 +1,34 @@
 from pytube import Playlist, YouTube
 from progress.bar import IncrementalBar
-from clearFileName import clearFileName
+from additionary import clearFileName, is_playlist
+from download import download_video, download_audio
+from pathlib import Path
 
-s = input('Выберите плей лист(1) / одно видео(0): ')
-m = input('Выберите аудио(1) / видео(0): ')
-IUrl = input('Укажите ссылку: ')
-ISrc = input('Укажите папку, наприсер C:/video: ')
+import sys
 
-# def progress_func(stream, chunk, bytes_remaining):
-#     size = stream.filesize
-#     progress = int(((size - bytes_remaining) / size) * 100)
-#     bar.next(progress)
+params = sys.argv[1:]
+
+m = params[0]
+IUrl = params[1]
+ISrc = Path(params[2])
 
 
-if s == "0" or s == "False" or s == False:
-    # bar1 = IncrementalBar('Progress', max = 100, suffix='%(percent)d%%')
+if not is_playlist(IUrl):
     youtube = YouTube(IUrl)
-    title = clearFileName(youtube.title)
     if m == 0:
-        stream = youtube.streams.get_highest_resolution()
-        stream.download(output_path=ISrc, filename=f"{title}.mp4")
+        download_video(youtube, ISrc)
     else:
-        stream = youtube.streams.filter(only_audio=True).first()
-        stream.download(output_path=ISrc, filename=f"{title}.mp3")
-    print(f'1/1 {title} ')
-    print('Download completed successfully!')
-elif s == "1" or s == "True" or s == True:
+        download_audio(youtube, ISrc)
+    print(f'1/1 {clearFileName(youtube.title)} \nDownload completed successfully!')
+else:
     link = Playlist(IUrl)
     bar = IncrementalBar('Progress', max = len(link), suffix='%(percent)d%%')
     for n, i in link.video_urls:
         youtube = YouTube(i)
         title = clearFileName(youtube.title)
         if m == 0:
-            stream = youtube.streams.get_highest_resolution()
-            stream.download(output_path=ISrc, filename=f"{title}.mp4")
+            download_video(youtube, ISrc)
         else:
-            stream = youtube.streams.filter(only_audio=True).first()
-            stream.download(output_path=ISrc, filename=f"{title}.mp3")
+            download_audio(youtube, ISrc)
         bar.next()
-        print(f'{n}/{len(link)} {title}')
-    print('Download completed successfully!')
-else:
-    print("Error")
+        print(f'{n}/{len(link)} {title} \nDownload completed successfully!')

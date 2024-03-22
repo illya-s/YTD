@@ -46,6 +46,22 @@ QListView {
 	border-radius: 15px;
 	background: #555;
 }
+QScrollBar:vertical {
+ 	border: none;
+	border-radius: 2.5px;
+ 	background: #555;
+ 	width: 5px;
+ } QScrollBar::handle {
+	border-radius: 2.5px;
+    background: #fff;
+} QScrollBar::add-line:vertical {
+    border: none;
+    background: none;
+} QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
+}
+
 QProgressBar  {
 	border-radius: 15px;
 	background-color: #555;

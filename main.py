@@ -37,7 +37,6 @@ class Progress(QRunnable):
                 try:
                     self.signals.nuul_progress.emit()
                     youtube = YouTube(li, on_progress_callback=self.progress_func)
-
                     if self.mp == 0:
                         download_video(youtube, self.path)
                     else:
