@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
-from music_tag import load_file
 from additionary import clearFileName
 from pydub import AudioSegment
+from taglib import File
 
 
 def download_video(yt, path):
@@ -28,7 +28,6 @@ def convert_to_wav(video_file_path):
     return f"{video_file_path.split('.')[0]}.wav"
 
 def add_metadata(yt, file_path):
-    audio = load_file(Path(file_path))
-    audio['title'] = yt.title
-    audio['artist'] = yt.author
-    audio.save()
+    with File(file_path, save_on_exit=True) as song:
+        song.tags["ALBUM"] = [yt.author]
+        song.tags["PERFORMER:HARPSICHORD"] = [yt.author]
