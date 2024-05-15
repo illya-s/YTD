@@ -1,6 +1,9 @@
-PyQt6==6.6.1
-PyQt6-Qt6==6.6.1
-PyQt6-sip==13.6.0
-pytube==15.0.0
-pytaglib==3.0.0
+download==0.3.5
+music_tag==0.4.3
+mutagen==1.47.0
+progress==1.6
 pydub==0.25.1
+PyQt6==6.7.0
+PyQt6_sip==13.6.0
+pytaglib==3.0.0
+pytube==15.0.0
