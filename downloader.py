@@ -29,22 +29,10 @@ class Download(QRunnable):
 
     def run(self):
         if is_playlist(self.link):
-            self.playlist_download()
+            link = Playlist(self.link)
         else:
-            self.signals.progress.emit(0)
-            try:
-                youtube = YouTube(self.link, on_progress_callback=self.progress_func)
-                if self.mp == 0:
-                    self.download_video(youtube, self.path)
-                else:
-                    self.download_audio(youtube, self.path)
-                self.signals.progress.emit(100)
-                self.signals.messege.emit(f'1/1 {clearFileName(youtube.title)}', "#FFF")
-            except Exception as e:
-                self.signals.messege.emit(f"Error: {e}", "#F00")
-        self.signals.messege.emit("Download sucsessful!", "#0F0")
-    def playlist_download(self):
-        link = Playlist(self.link)
+            link = [self.link]
+
         self.signals.progress.emit(0)
         for n, li in enumerate(link):
             try:
@@ -58,6 +46,7 @@ class Download(QRunnable):
             except Exception as e:
                 self.signals.messege.emit(f"Error: {e}", "#F00")
                 continue
+        self.signals.messege.emit("Download sucsessful!", "#0F0")
 
 
     def download_video(self, yt, path):
