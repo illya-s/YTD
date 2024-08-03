@@ -3,4 +3,4 @@
 	video, music, playlists
 
 download python libs:<br>
- 	pip install -r requirements.txt
+	pip install -r requirements.txt
