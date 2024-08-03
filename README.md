@@ -1,9 +1,9 @@
 # YTD
 Download from YouTube:<br>
-<dd>video, music, playlists</dd>
+&nbsp;&nbsp;&nbsp;&nbsp;video, music, playlists
 
 python libs:<br>
-<dd>pip install -r requirements.txt</dd>
+&nbsp;&nbsp;&nbsp;&nbsp;pip install -r requirements.txt
 
 To solve the error "get_throttling_function_name: could not find match for multiple":<br>
-<dd>https://github.com/pytube/pytube/issues/1750#issuecomment-1672165335</dd>
+&nbsp;&nbsp;&nbsp;&nbsp;https://github.com/pytube/pytube/issues/1750#issuecomment-1672165335
