@@ -5,5 +5,5 @@ Download from YouTube:<br>
 python libs:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pip install -r requirements.txt
 
-To solve the error "get_throttling_function_name: could not find match for multiple":<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/pytube/pytube/issues/1750#issuecomment-1672165335" target="_blank">https://github.com/pytube/pytube/issues/1750#issuecomment-1672165335</a>
+To solve the error "Error: HTTP Error 400: Bad Request":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/pytube/pytube/issues/2013#issuecomment-2296156928" target="_blank">https://github.com/pytube/pytube/issues/2013#issuecomment-2296156928</a>
