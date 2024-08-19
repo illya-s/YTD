@@ -43,10 +43,10 @@ class Download(QRunnable):
                     self.download_audio(youtube, self.path)
                 self.signals.progress.emit(int(((n + 1) * 100) / len(link)))
                 self.signals.messege.emit(f'{n+1}/{len(link)} {clearFileName(youtube.title)}', "#FFF")
+                self.signals.messege.emit("Download sucsessful!", "#0F0")
             except Exception as e:
                 self.signals.messege.emit(f"Error: {e}", "#F00")
                 continue
-        self.signals.messege.emit("Download sucsessful!", "#0F0")
 
 
     def download_video(self, yt, path):
