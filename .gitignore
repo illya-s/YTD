@@ -1,4 +1,6 @@
 __pycache__/
 venv/
 test.py
-YOUR_CLIENT_SECRET_FILE.json
+video_links.json
+video_links(2).json
+youtobe.py
