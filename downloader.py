@@ -1,17 +1,12 @@
-from PyQt6.QtCore import QRunnable, QObject, pyqtSignal as Signal
+from PyQt6.QtCore import QRunnable
 from pytube import Playlist, YouTube
-import os
+import os, json
 
 from pathlib import Path
 from pydub import AudioSegment
 from taglib import File
-
-from additionary import is_playlist, clearFileName
-
-
-class DownloadWorkerSignals(QObject):
-    progress = Signal(int)
-    messege = Signal(str, str)
+from youtobe import YouTobe
+from additionary import *
 
 class Download(QRunnable):
     def __init__(self, link, path, mp):
@@ -20,15 +15,23 @@ class Download(QRunnable):
         self.path = path
         self.mp = mp
         self.signals = DownloadWorkerSignals()
-        self.l = 0
 
     def progress_func(self, stream, chunk, bytes_remaining):
         size = stream.filesize
         progress = int(((size - bytes_remaining) / size) * 100)
         self.signals.progress.emit(progress)
 
+    def file_in_list(self, directory_path, fileName):
+        return True if fileName in [file.name for file in Path(directory_path).iterdir() if file.is_file()] else False
+
     def run(self):
-        if is_playlist(self.link):
+        if is_file(self.link):
+            with open(self.link, 'r') as file:
+                link = json.load(file)
+        # elif is_channel(self.link):
+        #     self.signals.messege.emit("Search video...", "#FFF")
+        #     link = YouTobe(self.link).run()
+        elif is_playlist(self.link):
             link = Playlist(self.link)
         else:
             link = [self.link]
@@ -37,60 +40,41 @@ class Download(QRunnable):
         for n, li in enumerate(link):
             try:
                 youtube = YouTube(li, on_progress_callback=self.progress_func)
-                if self.mp == 0:
-                    self.download_video(youtube, self.path)
-                else:
-                    self.download_audio(youtube, self.path)
+                title = clearFileName(youtube.title)
+
+                if self.file_in_list(self.path, f"{title}{".mp4" if self.mp == 0 else ".wav"}"):
+                    self.signals.messege.emit(f'{n+1}/{len(link)} --skpped-- {title}', "#ff7000")
+                    continue
+
+                self.download_video(youtube, self.path) if self.mp == 0 else self.download_audio(youtube, self.path)
+
                 self.signals.progress.emit(int(((n + 1) * 100) / len(link)))
-                self.signals.messege.emit(f'{n+1}/{len(link)} {clearFileName(youtube.title)}', "#FFF")
-                self.signals.messege.emit("Download sucsessful!", "#0F0")
+                self.signals.messege.emit(f'{n+1}/{len(link)} {title}', "#0F0")
             except Exception as e:
                 self.signals.messege.emit(f"Error: {e}", "#F00")
                 continue
-
 
     def download_video(self, yt, path):
         video = yt.streams.get_highest_resolution()
         out_file_path = video.download(output_path=path, filename=f"{clearFileName(yt.title)}.mp4")
         return out_file_path
 
+
     def download_audio(self, yt, path):
-        path = Path(path)
-        audio_file_path = self.download_youtube_audio(yt, path)
-        audio_file_path = self.convert_to_wav(audio_file_path)
+        audio_stream = yt.streams.filter(only_audio=True).first()
+        audio_file = audio_stream.download(path)
+
+        audio_file_path = self.convert(audio_file)
         self.add_metadata(yt, audio_file_path)
 
-    def download_youtube_audio(self, yt, output_path):
-        audio_stream = yt.streams.filter(only_audio=True).first()
-        audio_file_path = audio_stream.download(output_path=output_path, filename=f"{clearFileName(yt.title)}.mp4")
-        return audio_file_path
-
-    def convert_to_wav(self, video_file_path):
-        audio = AudioSegment.from_file(Path(video_file_path), format="mp4")
-        audio.export(f"{video_file_path.split('.')[0]}.wav", format="wav")
-        os.remove(video_file_path)
-        return f"{video_file_path.split('.')[0]}.wav"
+    def convert(self, video_file):
+        base, ext = os.path.splitext(video_file)
+        audio = AudioSegment.from_file(video_file)
+        audio.export(f"{base}.wav", format="wav")
+        os.remove(video_file)
+        return f"{base}.wav"
 
     def add_metadata(self, yt, file_path):
         with File(file_path, save_on_exit=True) as song:
             song.tags["ALBUM"] = [yt.author]
             song.tags["PERFORMER:HARPSICHORD"] = [yt.author]
-
-## --- add image from video url! ---
-# from pytube import YouTube
-# import requests
-# from PIL import Image
-# from io import BytesIO
-
-# video_url = "https://music.youtube.com/watch?v=WUbYKe2DQgU&si=fRcmT7rAMHWDIuSV"
-
-# yt = YouTube(video_url)
-
-# thumbnail_url = yt.thumbnail_url
-
-# response = requests.get(thumbnail_url)
-# img = Image.open(BytesIO(response.content))
-
-# img.save("thumbnail.png", "PNG")
-
-# print("Thumbnail saved as 'thumbnail.png'")

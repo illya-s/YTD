@@ -50,14 +50,14 @@ QComboBox {
 	padding: 0 15px;
 	border-radius: 15px;
 	background: #555;
-	text-align: center;
 }
 QComboBox::drop-down {
     border: 0;
 }
 QComboBox QAbstractItemView {
 	padding: 5px;
-	border-radius: 15px;
+	border-radius: 5px;
+	background: #555;
 }
 
 #convertListView, #listView {
@@ -189,6 +189,15 @@ QProgressBar::chunk {
          </property>
          <property name="cursor">
           <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="frame">
           <bool>true</bool>

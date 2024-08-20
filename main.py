@@ -4,7 +4,9 @@ from PyQt6.QtCore import QThreadPool
 from PyQt6.QtGui import QColor, QTextCharFormat
 
 from downloader import Download
+from additionary import is_file
 import sys, os, requests
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -38,15 +40,15 @@ class MainWindow(QMainWindow):
         self.ui.progressBar.setValue(progress)
 
     def url_exists(self, url):
-        try:
-            response = requests.head(url)
-            if response.status_code == 200:
-                return True
-            else:
+        if is_file(url):
+            return True
+        else:
+            try:
+                response = requests.head(url)
+                return True if response.status_code == 200 else False
+            except requests.RequestException as e:
+                self.messege(f"An error occurred: {e}", "#F00")
                 return False
-        except requests.RequestException as e:
-            print(f"An error occurred: {e}")
-            return False
 
     def start_download(self):
         link, path = self.ui.lineUrl.text(), self.ui.lineSrc.text()
