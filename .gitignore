@@ -1,5 +1,6 @@
 __pycache__/
 venv/
+output/
 test.py
 video_links.json
 video_links(2).json
