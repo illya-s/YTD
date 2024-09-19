@@ -1,7 +1,7 @@
 from PySide6 import QtGui
-from PySide6.QtUiTools import QUiLoader, loadUiType
-from PySide6.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PySide6.QtCore import QThreadPool, QFile
+from PySide6.QtUiTools import loadUiType
+from PySide6.QtWidgets import QApplication, QFileDialog
+from PySide6.QtCore import QThreadPool
 from PySide6.QtGui import QColor, QTextCharFormat
 
 from downloader import Download
