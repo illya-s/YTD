@@ -1,17 +1,26 @@
-from PyQt6 import uic, QtGui
-from PyQt6.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt6.QtCore import QThreadPool
-from PyQt6.QtGui import QColor, QTextCharFormat
+from PySide6 import QtGui
+from PySide6.QtUiTools import QUiLoader, loadUiType
+from PySide6.QtWidgets import QMainWindow, QApplication, QFileDialog
+from PySide6.QtCore import QThreadPool, QFile
+from PySide6.QtGui import QColor, QTextCharFormat
 
 from downloader import Download
 from additionary import is_file
 import sys, os, requests
 
 
-class MainWindow(QMainWindow):
+def UiClass(path):
+    formClass, widgetClass = loadUiType(path)
+    name = os.path.basename(path).replace('.', '_')
+    def __init__(self, parent=None):
+        widgetClass.__init__(self, parent)
+        self.ui = formClass()
+        self.ui.setupUi(self)
+    return type(name, (widgetClass, formClass), {'__init__': __init__})
+
+class MainWindow(UiClass("design.ui")):
     def __init__(self):
-        super(MainWindow, self).__init__()
-        self.ui = uic.loadUi('design.ui', self)
+        super().__init__()
 
         self.ui.browse.clicked.connect(self.open_folder)
         self.folderpath = ''

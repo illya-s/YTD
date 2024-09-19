@@ -1,6 +1,6 @@
 from pytube import YouTube
 from pathlib import Path
-from PyQt6.QtCore import QObject, pyqtSignal as Signal
+from PySide6.QtCore import QObject, Signal
 
 def is_playlist(url):
     try:

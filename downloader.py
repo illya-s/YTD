@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QRunnable
+from PySide6.QtCore import QRunnable
 from pytube import Playlist, YouTube
 import os, json
 
