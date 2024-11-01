@@ -38,7 +38,7 @@ class MainWindow(UiClass("design.ui")):
         format = QTextCharFormat()
         format.setForeground(QColor(color))
         cursor.setCharFormat(format)
-        
+
         cursor.insertText(f"{text}\n")
         self.ui.listView.setTextCursor(cursor)
         self.ui.listView.ensureCursorVisible()
@@ -56,7 +56,7 @@ class MainWindow(UiClass("design.ui")):
                 response = requests.head(url)
                 return True if response.status_code == 200 else False
             except requests.RequestException as e:
-                self.messege(f"An error occurred: {e}", "#F00")
+                self.messege(f"Error: {e}", "#F00")
                 return False
 
     def start_download(self):

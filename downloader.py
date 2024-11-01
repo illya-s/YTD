@@ -5,7 +5,6 @@ import os, json
 from pathlib import Path
 from pydub import AudioSegment
 from taglib import File
-from youtobe import YouTobe
 from additionary import *
 
 class Download(QRunnable):
@@ -43,7 +42,7 @@ class Download(QRunnable):
                 title = clearFileName(youtube.title)
 
                 if self.file_in_list(self.path, f"{title}{".mp4" if self.mp == 0 else ".wav"}"):
-                    self.signals.messege.emit(f'{n+1}/{len(link)} --skpped-- {title}', "#ff7000")
+                    self.signals.messege.emit(f'{n+1}/{len(link)} --skepped-- {title}', "#ff7000")
                     continue
 
                 self.download_video(youtube, self.path) if self.mp == 0 else self.download_audio(youtube, self.path)
@@ -52,6 +51,7 @@ class Download(QRunnable):
                 self.signals.messege.emit(f'{n+1}/{len(link)} {title}', "#0F0")
             except Exception as e:
                 self.signals.messege.emit(f"Error: {e}", "#F00")
+                self.signals.progress.emit(100)
                 continue
 
     def download_video(self, yt, path):
