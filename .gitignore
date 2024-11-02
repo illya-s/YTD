@@ -2,6 +2,7 @@ __pycache__/
 venv/
 output/
 test.py
+test2.py
 video_links.json
 video_links(2).json
 youtobe.py
