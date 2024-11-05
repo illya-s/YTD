@@ -21,9 +21,9 @@ Installation and Launch:
 1. Download the project archive.
 2. Extract it on your computer.
 3. Install dependencies by running:
-    'bash pip install -r requirements.txt'
+    `bash pip install -r requirements.txt`
 4. Run the script:
-    'bash python main.py'
+    `bash python main.py`
 
 Notes
 
