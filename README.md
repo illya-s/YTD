@@ -3,7 +3,7 @@ Description
 
 YTD is a simple and convenient tool for downloading videos from YouTube in various formats and quality options. It allows you to easily save your favorite videos for offline viewing.
 
-Основные функции:
+Key Features:
 
 - Download high-quality videos — support for 720p, 1080p, and higher.
 - Format selection — supports MP4, WAV (for audio).
@@ -11,12 +11,12 @@ YTD is a simple and convenient tool for downloading videos from YouTube in vario
 - Playlist support — download all videos from a playlist with one click.
 - Audio conversion — option to download only the audio track to save space.
 
-Улучшения и обновления в v1.2.0:
+Improvements and Updates in v1.2.0:
 
 - Initial release with core functionality.
 - Error handling for unavailable videos.
 
-Установка и запуск
+Installation and Launch:
 
 1. Download the project archive.
 2. Extract it on your computer.
